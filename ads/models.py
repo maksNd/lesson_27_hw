@@ -1,9 +1,8 @@
 from django.db import models
-from _data_source.csv_to_json import load_data_to_model
 
 
 class Category(models.Model):
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
 
