@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "lesson 27-home-work"
+version = "0.1.0"
+description = ""
+authors = ["mkN <mknord1565@gmail.com>"]
+readme = "README.md"
+packages = [{include = "lesson 27_home_work"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.1.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
