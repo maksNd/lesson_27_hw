@@ -1,16 +1,33 @@
 from django.db import models
 
+from users.models import User
+
 
 class Category(models.Model):
-    # id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
 
 class Ad(models.Model):
-    # category = models.ForeignKey(Categories, on_delete = models.SET_NULL)
+    # user_pk = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
-    author = models.CharField(max_length=150)
+    author_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     price = models.PositiveIntegerField()
     description = models.CharField(max_length=1000)
-    address = models.CharField(max_length=150)
     is_published = models.BooleanField(default=False)
+    image = models.ImageField(null=True, blank=True, upload_to='ad_images')
+    category_id = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Объявление'
+        verbose_name_plural = 'Объявления'
