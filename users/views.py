@@ -9,9 +9,11 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from rest_framework.viewsets import ModelViewSet
 
 from lesson_27 import settings
 from users.models import User, Location
+from users.serializers import LocationSerializer
 
 
 class UserListView(ListView):
@@ -147,3 +149,8 @@ class LocationListView(ListView):
                 'name': loc.name
             })
         return JsonResponse(response, safe=False)
+
+
+class LocationViewSet(ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer

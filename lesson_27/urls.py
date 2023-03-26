@@ -27,6 +27,7 @@ urlpatterns = [
     path("", include("ads.urls")),
 
     path("user/", include("users.urls")),
+    path("api-auth/", include("rest_framework.urls"))
 
 ]
 
