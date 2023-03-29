@@ -5,7 +5,7 @@ from users import views
 from users.views import LocationViewSet
 
 router = routers.SimpleRouter()
-router.register('loc', LocationViewSet)
+router.register('location', LocationViewSet)
 
 urlpatterns = [
     path("", views.UserListView.as_view()),
@@ -15,7 +15,6 @@ urlpatterns = [
     path("delete/<int:pk>", views.UserDeleteView.as_view()),
 
     # path("loc/", views.LocationListView.as_view()),
-
 ]
 
 urlpatterns += router.urls

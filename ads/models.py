@@ -18,12 +18,12 @@ class Category(models.Model):
 class Ad(models.Model):
     # user_pk = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
-    author_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     price = models.PositiveIntegerField()
     description = models.CharField(max_length=1000)
     is_published = models.BooleanField(default=False)
     image = models.ImageField(null=True, blank=True, upload_to='ad_images')
-    category_id = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
