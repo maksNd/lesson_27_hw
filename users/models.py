@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
@@ -14,26 +15,26 @@ class Location(models.Model):
         verbose_name_plural = 'Локации'
 
 
-class UserRoles(models.TextChoices):
-    MEMBER = 'member', 'Пользователь'
-    MODERATOR = 'moderator', 'Модератор'
-    ADMIN = 'admin', 'Администратор'
+# class UserRoles(models.TextChoices):
+#     MEMBER = 'member', 'Пользователь'
+#     MODERATOR = 'moderator', 'Модератор'
+#     ADMIN = 'admin', 'Администратор'
 
 
-class User(models.Model):
-    # ROLES = [
-    #     ('admin', 'Администратор'),
-    #     ('moderator', 'Модератор'),
-    #     ('member', 'Пользователь'),
-    # ]
+class User(AbstractUser):
+    ROLES = [
+        ('admin', 'Администратор'),
+        ('moderator', 'Модератор'),
+        ('member', 'Пользователь'),
+    ]
 
-    first_name = models.CharField(verbose_name='Имя', max_length=100)
-    last_name = models.CharField(max_length=100)
-    username = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=200)
-    # role = models.CharField(max_length=20, choices=ROLES, default='member')
-    role = models.CharField(choices=UserRoles.choices, max_length=9)
-    age = models.PositiveSmallIntegerField()
+    # first_name = models.CharField(verbose_name='Имя', max_length=100)
+    # last_name = models.CharField(max_length=100)
+    # username = models.CharField(max_length=100, unique=True)
+    # password = models.CharField(max_length=200)
+    role = models.CharField(max_length=20, choices=ROLES, default='member')
+    # role = models.CharField(choices=UserRoles.choices, max_length=9)
+    age = models.PositiveSmallIntegerField(null=True)
     location = models.ManyToManyField(Location)
 
     def __str__(self):

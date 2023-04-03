@@ -6,7 +6,8 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from ads.models import Ad, Category
 
@@ -52,19 +53,21 @@ class AdListView(ListAPIView):
         return super().get(request, *args, **kwargs)
 
 
-class AdDetailView(DetailView):
-    model = Ad
-
-    def get(self, request, *args, **kwarg):
-        ad = self.get_object()
-        return JsonResponse({
-            'id': ad.id,
-            'name': ad.name,
-            'author': str(ad.author_id),
-            'price': ad.price,
-            'description': ad.description,
-            'is_published': ad.is_published,
-        })
+class AdDetailView(RetrieveAPIView):
+    # model = Ad
+    # def get(self, request, *args, **kwarg):
+    #     ad = self.get_object()
+    #     return JsonResponse({
+    #         'id': ad.id,
+    #         'name': ad.name,
+    #         'author': str(ad.author_id),
+    #         'price': ad.price,
+    #         'description': ad.description,
+    #         'is_published': ad.is_published,
+    #     })
+    queryset = Ad.objects.all()
+    serializer_class = AdSerializer
+    permission_classes = [IsAuthenticated]
 
 
 @method_decorator(csrf_exempt, name='dispatch')
