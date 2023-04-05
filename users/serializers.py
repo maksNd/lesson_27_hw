@@ -7,7 +7,6 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = '__all__'
-        # fields = ['name']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -41,17 +40,17 @@ class UserCreateSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
-    # def is_valid(self, raise_exception=False):
-    #     self._location = self.initial_data.pop('location')
-    #     return super().is_valid(raise_exception=raise_exception)
+    def is_valid(self, raise_exception=False):
+        self._location = self.initial_data.pop('location')
+        return super().is_valid(raise_exception=raise_exception)
 
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
 
-        # for i in self._location:
-        #     print(i)
-        #     location_obj = Location.objects.get_or_create(name=i)
-        #     user.location.add(location_obj)
+        for i in self._location:
+            print(i)
+            location_obj, _ = Location.objects.get_or_create(name=i)
+            user.location.add(location_obj)
 
         user.save()
         return user

@@ -16,7 +16,6 @@ class Category(models.Model):
 
 
 class Ad(models.Model):
-    # user_pk = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     price = models.PositiveIntegerField()
@@ -31,3 +30,9 @@ class Ad(models.Model):
     class Meta:
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
+
+
+class Selection(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(Ad)
