@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from rest_framework.fields import BooleanField
 
 from ads.models import Ad, Category, Selection
+from ads.validators import check_not_published
 from users.models import User
 
 
@@ -22,6 +24,7 @@ class AdSerializer(serializers.ModelSerializer):
 class AdCreateSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(slug_field='name', read_only=True)
     author = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    is_published = BooleanField(required=False, validators=[check_not_published])
 
     def create(self, validated_data):
         request = self.context.get('request')
@@ -51,4 +54,10 @@ class SelectionCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Selection
+        fields = '__all__'
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
         fields = '__all__'

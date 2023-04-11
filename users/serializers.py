@@ -27,7 +27,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
 class UserCreateSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
-    password = serializers.CharField(required=False)
+    password = serializers.CharField()
     role = serializers.CharField(default='member')
     location = serializers.SlugRelatedField(
         queryset=Location.objects.all(),
